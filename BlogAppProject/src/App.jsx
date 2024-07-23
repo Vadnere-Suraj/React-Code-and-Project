@@ -5,6 +5,7 @@ import './App.css';
 import {login,logout} from './store/authSlice'
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { Outlet } from 'react-router-dom';
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     
   }, []);
   
-  return !loading ? (<div className=' w-full h-screen bg-blue-700'><Header/><main></main><Footer/>Test</div>) : null 
+  return !loading ? (<div className=' w-full h-screen bg-blue-700'><Header/><main>TODO: <Outlet/></main><Footer/>Test</div>) : null 
 }
 
 export default App
