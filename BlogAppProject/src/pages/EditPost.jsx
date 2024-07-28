@@ -11,7 +11,9 @@ function EditPost() {
     useEffect(() => {
         if (slug) {
             service.getPost(slug).then((post) => {
-                setPost(post);
+                if (post) {
+                    setPost(post)
+                }
             })
         } else {
             navigate('/');

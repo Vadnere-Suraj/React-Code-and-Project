@@ -3,27 +3,28 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import service from "../../appwrite/config";
 import { Select, Input, RTE, Button } from "../index";
+import { useNavigate } from "react-router-dom";
 
 function PostForm({ post }) {
-  const { register, handleSubmit, watch, control, setValue, getValues } =
+  const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
         title: post?.title || "",
         slug: post?.$id || "",
         content: post?.content || "",
-        status: post?.status || true,
+        status: post?.status || "active",
       },
     });
 
-  const navigate = useDispatch();
+  const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
 
-  const submit = async (data) => {
+  const submitPost = async (data) => {
     if (post) {
-      const file = data.image[0] ? await service.uploadFile(image[0]) : null;
+      const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
 
       if (file) {
-        await service.deleteFile(post.featuredImage);
+        service.deleteFile(post.featuredImage);
       }
 
       const dbPost = await service.updatePost(post.$id, {
@@ -35,7 +36,7 @@ function PostForm({ post }) {
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
-      const file = data.image[0] ? await service.uploadFile(image[0]) : null;
+      const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
 
       if (file) {
         const fileId = file.$id;
@@ -76,7 +77,7 @@ function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+    <form onSubmit={handleSubmit(submitPost)} className="flex flex-wrap">
       <div className="w-2/3 px-2">
         <Input
           label="Title :"

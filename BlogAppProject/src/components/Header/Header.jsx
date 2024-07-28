@@ -54,7 +54,7 @@ function Header() {
                   </button>
                 </li>
               ) : null
-            )}xvgbgyu
+            )}
 
             {authStatus && (
               <li>

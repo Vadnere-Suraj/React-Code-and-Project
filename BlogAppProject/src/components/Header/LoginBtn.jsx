@@ -1,7 +1,7 @@
 
 import {useDispatch} from 'react-redux'
 import authservice from '../../appwrite/auth'
-import {logout} from '../../store/authSlice'
+import {logout as authLogout} from '../../store/authSlice'
 
 function LoginBtn() {
 
@@ -9,8 +9,10 @@ function LoginBtn() {
 
     const logouthandler = () => {
         authservice.logout().then(() => {
-            dispatch(logout())
+            dispatch(authLogout())
+            window.location.reload();
         })
+
     }
   return (
     <button

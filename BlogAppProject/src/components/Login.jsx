@@ -15,14 +15,15 @@ function Login() {
   const login = async (data) => {
     setError("");
     try {
-      const session = await authservice.login(data);
+      
 
-      if (session) {
+      if (await authservice.login(data)) {
         const userData = await authservice.getCurrentUser();
         if (userData) {
           dispatch(authLogin(userData));
         }
         navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       setError(error.message);

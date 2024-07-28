@@ -4,23 +4,27 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     status: false,
-    userData: null,
+    userData: null
 }
 
 const authSlice = createSlice({
-    name: 'auth',
+    name: "auth",
     initialState,
     reducers: {
         login: (state, action) => {
         state.status = true;
-        state.userData = action.payload.userData;
+        state.userData = action.payload.data;
+        
         },
 
         logout: (state)=> {
-            state.status = false;
-            state.userData = null;
+            return initialState;
         }
-    }
+    },
+
+    // extraReducers: (builder) => {
+    //     builder.addCase(logout.type, (state) => state); // No change needed
+    //   },
 });
 
 export const {login, logout} = authSlice.actions;
